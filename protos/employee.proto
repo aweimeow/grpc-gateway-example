@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package grpc_gateway_example;
+option go_package = "github.com/aweimeow/grpc-gateway-example/protos";
+
+import "google/api/annotations.proto";
+
+service AdminService {
+  rpc NewEmployee(EmployeeCreateRequest) returns (EmployeeCreateResponse) {
+    option (google.api.http) = {
+      post: "/employee/create"
+      body: "*"
+    };
+  };
+}
+
+message EmployeeCreateRequest {
+  string Name = 1;
+  enum gender {
+    MALE = 0; FEMALE = 1; TRANSGENDER = 2; NOTDEFINED = 3;
+  }
+  gender Gender = 2;
+  uint32 Age = 3;
+}
+
+message EmployeeCreateResponse {
+  bool isSuccess = 1;
+  string message = 2;
+}
